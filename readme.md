@@ -19,7 +19,7 @@ A small library providing utility methods to manage modules, particularly loadin
     	var info = mf.searchCache('./my-cool-module.js');
     	expect(info.length).to.equal(0);
 
-    	var mcm = mf.load('./my-cool-module.js')
+    	var mcm = mf.load('./my-cool-module.js');
     	info = mf.searchCache('./my-cool-module.js');
     	expect(info.length).to.equal(1);
     	expect(d1.hello()).to.equal('hello world');
@@ -29,12 +29,67 @@ A small library providing utility methods to manage modules, particularly loadin
     	expect(info.length).to.equal(0);
 	});
   });
-...
 ```
 
 ## Tests
 
   npm test
+
+## API
+
+### `uncache(moduleName)`
+#### Description
+Removes a module from the cache
+#### Parameters
+* moduleName - the name of the module to remove from the cache.
+
+
+### `searchCache(moduleName, callback)`
+#### Description
+Searches the cache for references to a module.
+#### Parameters
+* moduleName - the name of the module to search for.
+* callback - optional callback. If specified it will be called for each occurrence found.
+#### Returns
+If no callback is specified => an array of results found.
+If a callback is specified => undefined.
+
+### `load(moduleName)`
+#### Description
+Loads a module and optionally retrieves an import.
+Designed to give nice messages when the module or import is not found so mistakes in
+writing tests are picked up quickly.
+#### Parameters
+* moduleName - the name of the module to load.
+* importName - Optional name of the import to get and return for the module.
+#### Returns
+If an importName is specified => The module exported property with the same name.
+If no importName is specified => The module is returned.
+
+### `reload(moduleName)`
+#### Description
+Reloads a module and optionally retrieves an import.
+Similar to load but first removes the module from the cache.
+#### Parameters
+* moduleName - the name of the module to reload.
+* importName - Optional name of the import to get and return for the module.
+#### Returns
+If an importName is specified => The module exported property with the same name.
+If no importName is specified => The module is returned.
+
+
+### `resolverFn`
+#### Description
+The function used for resolving references. Usually needs setting from where the module is loaded
+so relative paths are resolved correctly.
+
+## Example
+
+```javascript
+  var mf = require('module-fu');
+  mf.resolverFn = function(moduleName) { return require.resolve(moduleName); }
+  var mcm = mf.load('./my-cool-module.js');
+```
 
 ## Contributing
 

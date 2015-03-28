@@ -18,22 +18,8 @@
 }
 
 /**
- * Runs over the cache to search for all the cached
- * files
+ * Searches the cache for references to a module.
  */
-function searchCacheSync(moduleName) {
-    var results = [];
-
-    searchCache(
-        moduleName,
-        function(mod) {
-            results.push(mod);
-        }
-    );
-
-    return results;
-};
-
 function searchCache(moduleName, callback) {
     var results = undefined;
     if (!callback) {
@@ -66,6 +52,9 @@ function searchCache(moduleName, callback) {
     return results;
 };
 
+/**
+ * Loads a module and optionally retrieves an import.
+ */
 function load(moduleName, importName) {
     var resolvedModuleName = module.exports.resolverFn(moduleName);
 	var mod = require(resolvedModuleName);
@@ -80,6 +69,9 @@ function load(moduleName, importName) {
 	return importObj;
 }
 
+/**
+ * Reloads a module and optionally retrieves an import.
+ */
 function reload(moduleName, importName) {
 	uncache(moduleName);
 	return load(moduleName, importName);
@@ -90,9 +82,9 @@ function defaultResolver(moduleName) {
 }
 
 module.exports = {
-	uncache : uncache,
+    uncache : uncache,
     searchCache : searchCache,
-	load : load,
-	reload : reload,
+    load : load,
+    reload : reload,
     resolverFn : defaultResolver
 };
