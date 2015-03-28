@@ -1,3 +1,14 @@
+var resolverFn = function(moduleName) {
+    return require.resolve(moduleName);
+}
+
+/**
+ * Sets the function used for resolving modules.
+ */
+function setResolver(resolver) {
+    resolverFn = resolver;
+}
+
 /**
  * Removes a module from the cache
  */
@@ -30,7 +41,7 @@ function searchCache(moduleName, callback) {
     }
 
     // Resolve the module identified by the specified name
-    var mod = module.exports.resolverFn(moduleName);
+    var mod = resolverFn(moduleName);
 
     // Check if the module has been resolved and found within
     // the cache
@@ -56,7 +67,7 @@ function searchCache(moduleName, callback) {
  * Loads a module and optionally retrieves an import.
  */
 function load(moduleName, importName) {
-    var resolvedModuleName = module.exports.resolverFn(moduleName);
+    var resolvedModuleName = resolverFn(moduleName);
 	var mod = require(resolvedModuleName);
 	if (!mod)
 		throw new Error('Unable to load module [' + moduleName + ']');
@@ -77,14 +88,11 @@ function reload(moduleName, importName) {
 	return load(moduleName, importName);
 }
 
-function defaultResolver(moduleName) {
-    return require.resolve(moduleName);
-}
 
 module.exports = {
+    setResolver : setResolver,
     uncache : uncache,
     searchCache : searchCache,
     load : load,
-    reload : reload,
-    resolverFn : defaultResolver
+    reload : reload
 };

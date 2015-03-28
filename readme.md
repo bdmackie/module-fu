@@ -37,6 +37,20 @@ A small library providing utility methods to manage modules, particularly loadin
 
 ## API
 
+### `setResolver(resolverFn)`
+#### Description
+Sets the function used to resolve module references.
+Usually needs setting from where this module is loaded.
+#### Parameters
+* resolverFn - A function that performs the equivalent of require.resolve()
+## Example
+
+```javascript
+  var mf = require('module-fu');
+  mf.setResolver(function(moduleName) { return require.resolve(moduleName); });
+  var mcm = mf.load('./my-cool-module.js');
+```
+
 ### `uncache(moduleName)`
 #### Description
 Removes a module from the cache
@@ -77,19 +91,6 @@ Similar to load but first removes the module from the cache.
 If an importName is specified => The module exported property with the same name.
 If no importName is specified => The module is returned.
 
-
-### `resolverFn`
-#### Description
-The function used for resolving references. Usually needs setting from where the module is loaded
-so relative paths are resolved correctly.
-
-## Example
-
-```javascript
-  var mf = require('module-fu');
-  mf.resolverFn = function(moduleName) { return require.resolve(moduleName); }
-  var mcm = mf.load('./my-cool-module.js');
-```
 
 ## Contributing
 

@@ -1,5 +1,5 @@
 var mf = require('../index.js');
-mf.resolverFn = function(moduleName) { return require.resolve(moduleName); };
+mf.setResolver(function(moduleName) { return require.resolve(moduleName); });
 var expect = require('chai').expect;
 
 describe('module-fu', function() {	
