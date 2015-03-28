@@ -58,7 +58,7 @@ Removes a module from the cache
 * moduleName - the name of the module to remove from the cache.
 
 
-### `searchCache(moduleName, callback)`
+### `searchCache(moduleName[, callback])`
 #### Description
 Searches the cache for references to a module.
 #### Parameters
@@ -68,7 +68,7 @@ Searches the cache for references to a module.
 If no callback is specified => an array of results found.
 If a callback is specified => undefined.
 
-### `load(moduleName)`
+### `load(moduleName[, importName])`
 #### Description
 Loads a module and optionally retrieves an import.
 Designed to give nice messages when the module or import is not found so mistakes in
@@ -80,7 +80,7 @@ writing tests are picked up quickly.
 If an importName is specified => The module exported property with the same name.
 If no importName is specified => The module is returned.
 
-### `reload(moduleName)`
+### `reload(moduleName[, importName])`
 #### Description
 Reloads a module and optionally retrieves an import.
 Similar to load but first removes the module from the cache.
@@ -91,6 +91,9 @@ Similar to load but first removes the module from the cache.
 If an importName is specified => The module exported property with the same name.
 If no importName is specified => The module is returned.
 
+## Credits
+
+Adapted from [this answer](http://stackoverflow.com/a/14801711) to a StackOverflow question.
 
 ## Contributing
 
