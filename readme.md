@@ -7,8 +7,9 @@ A small library providing utility methods to manage modules, particularly loadin
 
   npm install module-fu --save-dev
 
-## Usage
+## Example
 
+```javascript
   var mf = require('module-fu');
   mf.resolverFn = function(moduleName) { return require.resolve(moduleName); }
   var expect = require('chai').expect;
@@ -28,6 +29,8 @@ A small library providing utility methods to manage modules, particularly loadin
     	expect(info.length).to.equal(0);
 	});
   });
+...
+```
 
 ## Tests
 
