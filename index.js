@@ -1,4 +1,9 @@
-var resolverFn = function(moduleName) {
+/**
+ * @file Module helpers.
+ * @copyright Ben Mackie 2015
+ * @license Apache-2.0
+ */
+ var resolverFn = function(moduleName) {
     return require.resolve(moduleName);
 }
 

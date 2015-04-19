@@ -95,11 +95,6 @@ If no importName is specified => The module is returned.
 
 Adapted from [this answer](http://stackoverflow.com/a/14801711) to a StackOverflow question.
 
-## Contributing
-
-In lieu of a formal styleguide, take care to maintain the existing coding style.
-Add unit tests for any new or changed functionality. Test your code.
-
 ## Release History
 
 * 0.1.0 Initial release
