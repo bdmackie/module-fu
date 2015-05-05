@@ -17,7 +17,7 @@ This example assumes you'll be using it in development only.
   var expect = require('chai').expect;
 
   describe('my-cool-module', function() {	
-    it('rocks because I reload the core module.', function() {
+    it('rocks because I reload the module.', function() {
     	var info = mf.find('./my-cool-module.js');
     	expect(info.length).to.equal(0);
 
