@@ -7,11 +7,13 @@ A small library providing utility methods to manage modules, particularly loadin
 
   npm install module-fu --save-dev
 
+This example assumes you'll be using it in development only.
+
 ## Example
 
 ```javascript
   var mf = require('module-fu');
-  mf.resolverFn = function(moduleName) { return require.resolve(moduleName); }
+  mf.setResolver(function(moduleName) { return require.resolve(moduleName); });
   var expect = require('chai').expect;
 
   describe('my-cool-module', function() {	
@@ -94,7 +96,3 @@ If no importName is specified => The module is returned.
 ## Credits
 
 Adapted from [this answer](http://stackoverflow.com/a/14801711) to a StackOverflow question.
-
-## Release History
-
-* 0.1.0 Initial release

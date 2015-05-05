@@ -17,10 +17,10 @@ function setResolver(resolver) {
 /**
  * Removes a module from the cache
  */
- function uncache(moduleName) {
+ function remove(moduleName) {
 	// Run over the cache looking for the files
     // loaded by the specified module name
-    searchCache(moduleName, function (mod) {
+    find(moduleName, function (mod) {
         delete require.cache[mod.id];
     });
 
@@ -36,7 +36,7 @@ function setResolver(resolver) {
 /**
  * Searches the cache for references to a module.
  */
-function searchCache(moduleName, callback) {
+function find(moduleName, callback) {
     var results = undefined;
     if (!callback) {
         results = [];
@@ -89,15 +89,15 @@ function load(moduleName, importName) {
  * Reloads a module and optionally retrieves an import.
  */
 function reload(moduleName, importName) {
-	uncache(moduleName);
+	remove(moduleName);
 	return load(moduleName, importName);
 }
 
 
 module.exports = {
     setResolver : setResolver,
-    uncache : uncache,
-    searchCache : searchCache,
+    remove : remove,
+    find : find,
     load : load,
     reload : reload
 };
