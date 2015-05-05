@@ -18,16 +18,16 @@ This example assumes you'll be using it in development only.
 
   describe('my-cool-module', function() {	
     it('rocks because I reload the core module.', function() {
-    	var info = mf.searchCache('./my-cool-module.js');
+    	var info = mf.find('./my-cool-module.js');
     	expect(info.length).to.equal(0);
 
     	var mcm = mf.load('./my-cool-module.js');
-    	info = mf.searchCache('./my-cool-module.js');
+    	info = mf.find('./my-cool-module.js');
     	expect(info.length).to.equal(1);
     	expect(d1.hello()).to.equal('hello world');
 
-    	mf.uncache('./my-cool-module.js');
-    	info = mf.searchCache('./my-cool-module.js');
+    	mf.remove('./my-cool-module.js');
+    	info = mf.find('./my-cool-module.js');
     	expect(info.length).to.equal(0);
 	});
   });
@@ -53,14 +53,14 @@ Usually needs setting from where this module is loaded.
   var mcm = mf.load('./my-cool-module.js');
 ```
 
-### `uncache(moduleName)`
+### `remove(moduleName)`
 #### Description
 Removes a module from the cache
 #### Parameters
 * moduleName - the name of the module to remove from the cache.
 
 
-### `searchCache(moduleName[, callback])`
+### `find(moduleName[, callback])`
 #### Description
 Searches the cache for references to a module.
 #### Parameters
