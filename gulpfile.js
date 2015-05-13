@@ -18,7 +18,7 @@ gulp.task('validate-json', function () {
     .pipe(validate());
 });
 
-
+/*
 gulp.task('add', function () {
 	return gulp.src('.')
 		.pipe(git.add({args: '--all'}));
@@ -28,10 +28,6 @@ gulp.task('commit', function () {
 	var m = options.m ? options.m : 'bumped version';
 	return gulp.src('.')
 		.pipe(git.commit(m, {args: '-a'}));
-});
-
-gulp.task('push', function (cb) {
-	git.push('origin', 'master', cb);
 });
 
 gulp.task('push-all', function (cb) {
@@ -48,11 +44,37 @@ gulp.task('push-all', function (cb) {
       cb(error);
     });
 });
+*/
+
+gulp.task('commit-version', function () {
+	var m = options.m ? options.m : 'bumped version';
+	return gulp.src('.')
+		.pipe(git.commit(m, {args: '-a'}));
+});
 
 gulp.task('bump', function(){
     return gulp.src('./package.json')
         .pipe(bump())
         .pipe(gulp.dest('./'));
+});
+
+gulp.task('push', function (cb) {
+	git.push('origin', 'master', cb);
+});
+
+gulp.task('bump-push', function (cb) {
+  runSequence(
+    'bump',
+    'commit-version',
+    'push',
+    function (error) {
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log('RELEASE FINISHED SUCCESSFULLY');
+      }
+      cb(error);
+    });
 });
 
 gulp.task('tag', function (cb) {
