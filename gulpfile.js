@@ -4,6 +4,7 @@ var validate = require('gulp-nice-package');
 var git = require('gulp-git');
 var bump = require('gulp-bump');
 var runSequence = require('run-sequence');
+var fs = require('fs');
 
 var minimist = require('minimist');
 var options = minimist(process.argv.slice(2));
