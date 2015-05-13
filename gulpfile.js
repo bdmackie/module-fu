@@ -1,9 +1,12 @@
-var gulp = require('gulp-param')(require('gulp'), process.argv);
+var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var validate = require('gulp-nice-package');
 var git = require('gulp-git');
 var bump = require('gulp-bump');
 var runSequence = require('run-sequence');
+
+var minimist = require('minimist');
+var options = minimist(process.argv.slice(2));
 
 gulp.task('test', [], function () {
     gulp.src('test/**/test*.js', {read: false})
@@ -16,14 +19,13 @@ gulp.task('validate-json', function () {
 });
 
 
-gulp.task('add', function (m) {
+gulp.task('add', function () {
 	return gulp.src('.')
 		.pipe(git.add({args: '--all'}));
 });
 
-gulp.task('commit', function (m) {
-	if (!m)
-		m = 'bumped version';
+gulp.task('commit', function () {
+	var m = options.m ? options.m : 'bumped version';
 	return gulp.src('.')
 		.pipe(git.commit(m, {args: '-a'}));
 });
@@ -32,7 +34,7 @@ gulp.task('push', function (cb) {
 	git.push('origin', 'master', cb);
 });
 
-gulp.task('push-all', function (callback) {
+gulp.task('push-all', function (cb) {
   runSequence(
     'add',
     'commit',
@@ -43,7 +45,7 @@ gulp.task('push-all', function (callback) {
       } else {
         console.log('RELEASE FINISHED SUCCESSFULLY');
       }
-      callback(error);
+      cb(error);
     });
 });
 
