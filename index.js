@@ -1,26 +1,28 @@
+var _this = {};
+
 /**
  * @file Module helpers.
  * @copyright Ben Mackie 2015
  * @license MIT
  */
- var resolverFn = function(moduleName) {
+var resolverFn = function(moduleName) {
     return require.resolve(moduleName);
 }
 
 /**
  * Sets the function used for resolving modules.
  */
-function setResolver(resolver) {
+_this.setResolver = function(resolver) {
     resolverFn = resolver;
 }
 
 /**
  * Removes a module from the cache
  */
- function remove(moduleName) {
+_this.remove = function(moduleName) {
 	// Run over the cache looking for the files
     // loaded by the specified module name
-    find(moduleName, function (mod) {
+    _this.find(moduleName, function (mod) {
         delete require.cache[mod.id];
     });
 
@@ -36,7 +38,7 @@ function setResolver(resolver) {
 /**
  * Searches the cache for references to a module.
  */
-function find(moduleName, callback) {
+ _this.find = function(moduleName, callback) {
     var results = undefined;
     if (!callback) {
         results = [];
@@ -69,9 +71,20 @@ function find(moduleName, callback) {
 };
 
 /**
+ * Checks if there are any modules loaded with the specified
+ * name.
+ */
+ _this.has = function(moduleName) {
+    var results = _this.find(moduleName);
+    return (results.length > 0);
+};
+
+
+
+/**
  * Loads a module and optionally retrieves an import.
  */
-function load(moduleName, importName) {
+ _this.load = function(moduleName, importName) {
     var resolvedModuleName = resolverFn(moduleName);
 	var mod = require(resolvedModuleName);
 	if (!mod)
@@ -88,16 +101,10 @@ function load(moduleName, importName) {
 /**
  * Reloads a module and optionally retrieves an import.
  */
-function reload(moduleName, importName) {
-	remove(moduleName);
-	return load(moduleName, importName);
+_this.reload = function(moduleName, importName) {
+	_this.remove(moduleName);
+	return _this.load(moduleName, importName);
 }
 
 
-module.exports = {
-    setResolver : setResolver,
-    remove : remove,
-    find : find,
-    load : load,
-    reload : reload
-};
+module.exports = _this;
